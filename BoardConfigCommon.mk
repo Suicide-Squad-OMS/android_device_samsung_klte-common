@@ -23,6 +23,9 @@ TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 # Use Snapdragon LLVM if available on build server
 TARGET_USE_SDCLANG := true
 
+# Includes
+TARGET_SPECIFIC_HEADER_PATH += $(PLATFORM_PATH)/include
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8974
 
