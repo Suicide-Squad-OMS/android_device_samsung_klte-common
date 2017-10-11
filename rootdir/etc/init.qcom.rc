@@ -156,11 +156,17 @@ on post-fs-data
     # Create /data/time folder for time-services
     mkdir /data/time/ 0700 system system
 
+
     mkdir /data/vendor/audio/ 0770 media audio
 
     # Create a folder for audio delta files
     mkdir /data/vendor/audio/acdbdata 0770 media audio
     mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
+    mkdir /data/audio/ 0770 media audio
+
+    # Create a folder for audio delta files
+    mkdir /data/audio/acdbdata 0770 media audio
+    mkdir /data/audio/acdbdata/delta 0770 media audio
 
     mkdir /data/bluetooth 0770 bluetooth bluetooth
     # Enable the setgid bit on the directory
