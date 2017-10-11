@@ -183,7 +183,6 @@ PRODUCT_PACKAGES += \
     libsecril-client \
     libshim_ril
 
-
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
