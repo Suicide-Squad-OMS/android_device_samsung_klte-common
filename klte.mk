@@ -128,6 +128,10 @@ PRODUCT_PACKAGES += \
 # HIDL
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/hidl/manifest.xml:system/vendor/manifest.xml
+	
+# Samsung
+PRODUCT_PACKAGES += \
+    SamsungServiceMode	
 
 # Ramdisk
 PRODUCT_PACKAGES += \
