@@ -95,8 +95,8 @@ PRODUCT_PACKAGES += \
     Snap
 
 # Doze
-#PRODUCT_PACKAGES += \
-#    SamsungDoze
+PRODUCT_PACKAGES += \
+    SamsungDoze
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -104,8 +104,8 @@ PRODUCT_PACKAGES += \
     fingerprint.msm8974
 
 # FlipFlap
-#PRODUCT_PACKAGES += \
-#    FlipFlap
+PRODUCT_PACKAGES += \
+    FlipFlap
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \
@@ -180,7 +180,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libsecnativefeature \
     libsecril-client-sap \
-    libsecril-client
+    libsecril-client \
+    libshim_ril
+
 
 # Ramdisk
 PRODUCT_PACKAGES += \
