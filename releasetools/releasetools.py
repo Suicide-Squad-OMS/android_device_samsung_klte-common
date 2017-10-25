@@ -1,4 +1,4 @@
-# Copyright 2016 The CyanogenMod Project
+# Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,17 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-LOCAL_PATH := $(call my-dir)
+""" Custom OTA commands for klte devices """
 
-include $(CLEAR_VARS)
+import common
+import re
+import os
 
-LOCAL_SRC_FILES := libpn547_fw.c
-LOCAL_MODULE := libpn547_fw
-LOCAL_MODULE_OWNER := nxp
-LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_MODULE_TAGS := optional
-LOCAL_PACK_MODULE_RELOCATIONS := false
-LOCAL_PROPRIETARY_MODULE := true
-
-include $(BUILD_SHARED_LIBRARY)
+def FullOTA_InstallEnd(info):
+  info.script.Mount("/system")
+  info.script.AppendExtra('assert(run_program("/tmp/install/bin/variant_blobs.sh") == 0);')
+  info.script.Unmount("/system")

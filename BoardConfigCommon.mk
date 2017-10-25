@@ -29,14 +29,17 @@ TARGET_BOOTLOADER_BOARD_NAME := MSM8974
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 zcache.enabled=1 zcache.compressor=lz4
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 zcache.enabled=1 zcache.compressor=lz4 androidboot.bootdevice=msm_sdcc.1
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+# bootloader restricts the cmdline length and we run in to problems if we add androidboot.selinux=permissive. remove it for O bringup.
+#BOARD_KERNEL_CMDLINE += console=null
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
 LZMA_RAMDISK_TARGETS := recovery
+BOARD_KERNEL_IMAGE_NAME := zImage
 TARGET_KERNEL_SOURCE := kernel/samsung/msm8974
 
 # Audio
@@ -45,6 +48,10 @@ AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
 AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+
+BOARD_USES_GENERIC_AUDIO := true
+TARGET_USES_QCOM_MM_AUDIO := true
+
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
@@ -57,8 +64,10 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 #TARGET_USES_NON_TREBLE_CAMERA := true
 
+
 # CMHW
-BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/lineagehw
+BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/cmhw
+
 
 # Extended Filesystem Support
 TARGET_KERNEL_HAVE_EXFAT := true
@@ -67,11 +76,13 @@ TARGET_KERNEL_HAVE_EXFAT := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 TARGET_USE_LEGACY_SUPPORT := true 
 
+
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+
 
 # Power HAL
 TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(LOCAL_PATH)/power/power_ext.c
@@ -80,6 +91,9 @@ TARGET_POWERHAL_VARIANT := qcom
 # Radio
 BOARD_PROVIDES_LIBRIL := true
 TARGET_RIL_VARIANT := caf
+
+#BOARD_RIL_CLASS := ../../../device/samsung/klte-common/ril
+
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/klte-common/recovery/recovery_keys.c
@@ -90,6 +104,7 @@ BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_RECOVERY_SWIPE := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
+
 
 SF_START_GRAPHICS_ALLOCATOR_SERVICE := true
 
@@ -125,6 +140,7 @@ BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 WPA_SUPPLICANT_USE_HIDL := true 
+
 WIFI_BAND := 802_11_ABG
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
