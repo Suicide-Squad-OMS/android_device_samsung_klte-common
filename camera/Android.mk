@@ -20,6 +20,7 @@ LOCAL_SHARED_LIBRARIES := \
     android.hardware.graphics.bufferqueue@1.0
 
 LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE_RELATIVE_PATH := lineagehw
 LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
 

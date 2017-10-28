@@ -22,7 +22,7 @@ $(call inherit-product-if-exists, vendor/samsung/klte-common/klte-common-vendor.
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
-#DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
 
 # System properties
 -include $(LOCAL_PATH)/system_prop.mk
@@ -86,11 +86,10 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service \
+    camera.device@1.0-impl \
     camera.device@3.2-impl \
+    android.hardware.camera.provider@2.4-impl \
     camera.msm8974 \
-    libstlport \
     libxml2 \
     Snap
 
@@ -124,8 +123,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@1.0-impl \
-    android.hardware.light@1.0-service \
+    android.hardware.light@2.0-impl \
     lights.MSM8974
 
 # Media
@@ -178,6 +176,14 @@ PRODUCT_PACKAGES += \
 
 # Radio
 PRODUCT_PACKAGES += \
+    libshim_ril \
+    rild_socket \
+    android.hardware.radio@1.0 \
+    android.hardware.radio.deprecated@1.0
+
+# HIDL
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/hidl/manifest.xml:system/vendor/manifest.xml
     libsecnativefeature \
     libsecril-client-sap \
     libsecril-client \
@@ -195,8 +201,24 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-8974.conf:system/etc/thermal-engine-8974.conf
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service \
+    libbt-vendor
+
+# [TEMP] Disable Bluetooth
+PRODUCT_PROPERTY_OVERRIDES += \
+	config.disable_bluetooth=true
+
+# Network
+PRODUCT_PACKAGES += \
+    netutils-wrapper-1.0
+
 # Wifi
 PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0 \
+    android.hardware.wifi@1.0-impl \
     android.hardware.wifi@1.0-service \
     libnetcmdiface \
     wificond \
@@ -211,7 +233,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/configs/filter_ie:system/etc/wifi/filter_ie \
    $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-   $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
+   $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+   $(LOCAL_PATH)/configs/filter_ie:system/etc/wifi/filter_ie
 
 # common msm8974
 $(call inherit-product, device/samsung/msm8974-common/msm8974.mk)
